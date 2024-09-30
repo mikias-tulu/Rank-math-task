@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .movie-details {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .movie-poster {
+      float: left;
+      margin-right: 20px;
+    }
+    .movie-info {
+      overflow: hidden;
+    }
+    .error {
+      color: red;
+    }
+    .rating {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Movie Search</h1>
+    <form action="/search" method="POST">
+      <label for="movieName">Enter movie name:</label>
+      <input type="text" id="movieName" name="movieName" required>
+      <button type="submit">Search</button>
+    </form>
+
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+
+    <% if (movie) { %>
+      <div class="movie-details">
+        <img src="<%= movie.Poster %>" alt="Movie Poster" class="movie-poster" width="200">
+        <div class="movie-info">
+          <h2><%= movie.Title %> (<%= movie.Year %>)</h2>
+          <p><strong>Rated:</strong> <%= movie.Rated %></p>
+          <p><strong>Released:</strong> <%= movie.Released %></p>
+          <p><strong>Runtime:</strong> <%= movie.Runtime %></p>
+          <p><strong>Genre:</strong> <%= movie.Genre %></p>
+          <p><strong>Director:</strong> <%= movie.Director %></p>
+          <p><strong>Writer:</strong> <%= movie.Writer %></p>
+          <p><strong>Actors:</strong> <%= movie.Actors %></p>
+          <p><strong>Plot:</strong> <%= movie.Plot %></p>
+          <p><strong>Language:</strong> <%= movie.Language %></p>
+          <p><strong>Country:</strong> <%= movie.Country %></p>
+          <p><strong>Awards:</strong> <%= movie.Awards %></p>
+          <p><strong>Metascore:</strong> <%= movie.Metascore %></p>
+          <p><strong>IMDb Rating:</strong> <%= movie.imdbRating %> (<%= movie.imdbVotes %> votes)</p>
+          <p><strong>Box Office:</strong> <%= movie.BoxOffice %></p>
+          <p><strong>Production:</strong> <%= movie.Production %></p>
+          <p><strong>Website:</strong> <% if (movie.Website !== "N/A") { %>
+            <a href="<%= movie.Website %>" target="_blank">Visit website</a>
+          <% } else { %>N/A<% } %></p>
+
+          <h3>Ratings:</h3>
+          <div class="rating">
+            <% movie.Ratings.forEach(function(rating) { %>
+              <p><strong><%= rating.Source %>:</strong> <%= rating.Value %></p>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>
